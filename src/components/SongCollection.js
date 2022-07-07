@@ -1,21 +1,38 @@
 import React, { useState } from "react";
+
 import Song from "./Song";
 
-const SongCollection = props => {
+const SongCollection = ({ songs, selectedPlaylistSongIds, selectedSongId, setSelectedSongId}) => {
+    
+    const songComponents = songs.map((songObject) => {
+        
+        const songClickCallback = () => {
+            setSelectedSongId(songObject.id)
+        }
 
-    const [selectedSongId, setSelectedSongId] = useState(1)
-
-    console.log(selectedSongId)
-
-    const songComponents = props.songs.map((songObject) => {
+        let songClassName
+        if (selectedSongId === songObject.id) {
+            songClassName = "selected"
+        }
+        
         return (
             <Song 
                 key={songObject.id}
-                song={songObject}
-                setSelectedSongId={setSelectedSongId}
-                selectedSongId={selectedSongId}
+                name={songObject.name}
+                artist={songObject.artist}
+                id={songObject.id}
+                songClassName={songClassName}
+                songClickCallback={songClickCallback}
             />
         )
+    })
+
+    const selectedPlaylistSongs = songComponents.map((songComponent) => {
+        if (selectedPlaylistSongIds.includes(songComponent.props.id)) {
+            return(
+                songComponent
+            )
+        }
     })
 
     return (
@@ -23,7 +40,7 @@ const SongCollection = props => {
         <h1>
             Songs
         </h1>
-        {songComponents}
+        {selectedPlaylistSongs}
     </div>
     )
 }

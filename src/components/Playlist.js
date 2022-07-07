@@ -1,11 +1,9 @@
 import React from "react";
 
-const Playlist = ({ name, clickPlaylist, className }) => {
-    // const { name, clickPlaylist, className } = props
-
+const Playlist = ({ name, clickPlaylist, playlistClassName }) => {
 
     return (
-        <p onClick={clickPlaylist} className={className}>
+        <p onClick={clickPlaylist} className={playlistClassName}>
             {name}
         </p>
     )
